@@ -41,13 +41,13 @@ class Player:
     def heal(self):
         self.health += self.heal_amount
         print(f"You healed for {self.heal} health. Your health is now {self.health}.")
-        if self.health > 100:  # Assuming max health is 100
+        if self.health > 100: 
             self.health = 100
             print("Your health is at maximum (100).")    
     
 # initialize enemy data
 class Enemy:
-    def __init__(self, health=140, attack_power=10, critical_chance=0.08, critical_multiplier=2):
+    def __init__(self, health, attack_power, critical_chance, critical_multiplier):
         self.health = health
         self.attack_power = attack_power
         self.critical_chance = critical_chance
@@ -68,10 +68,35 @@ class Enemy:
         player.health -= damage
         print(f"Your health is now {player.health}.")
 
-# main loop
+# stats for ogre
+class Ogre(Enemy):
+    def __init__(self):
+        super().__init__(health=120, attack_power=10, critical_chance=0.08, critical_multiplier=2)
+
+# stats for troll
+class Troll(Enemy):
+    def __init__(self):
+        super().__init__(health=150, attack_power=7, critical_chance=0.12, critical_multiplier=3)        
+    # troll heal every turn
+    def attack(self, player):
+        super().attack(player)
+        self.health += 5
+        print(f"Troll heals for 5 health. Troll's health is now {self.health}.")
+        if self.health > 150: 
+            self.health = 150
+            print("Troll's health is at maximum (150).")
+
 def main():
     player = Player()
-    enemy = Enemy()
+    # Choose an enemy type
+    enemy_choice = input("Choose your enemy: (1) Ogre, (2) Troll: ")
+    if enemy_choice == '1':
+        enemy = Ogre()
+    elif enemy_choice == '2':
+        enemy = Troll()
+    else:
+        print("Invalid choice. Defaulting to Ogre.")
+        enemy = Ogre()
 
     while player.is_alive() and enemy.is_alive():
         action = player.action_choice()
