@@ -24,6 +24,26 @@ class Player:
                     print("Invalid choice. Please choose 1 or 2.")
             except ValueError:
                 print("Invalid input. Please enter a number.")
+
+    # player attack
+    def attack(self, enemy):
+        if random.random() < self.critical_chance:
+            damage = self.attack_power * self.critical_multiplier
+            print(f"Critical hit! Dealt {damage} damage.")
+        else:
+            damage = self.attack_power
+            print(f"Normal hit! Dealt {damage} damage.")
+
+        enemy.health -= damage
+        print(f"Enemy health is now {enemy.health}.")
+
+    # player heal
+    def heal(self):
+        self.health += self.heal_amount
+        print(f"You healed for {self.heal} health. Your health is now {self.health}.")
+        if self.health > 100:  # Assuming max health is 100
+            self.health = 100
+            print("Your health is at maximum (100).")    
     
 # initialize enemy data
 class Enemy:
