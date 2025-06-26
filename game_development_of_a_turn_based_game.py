@@ -47,7 +47,7 @@ class Player:
     
 # initialize enemy data
 class Enemy:
-    def __init__(self, health=140, attack_power=10, critical_chance=0.8, critical_multiplier=2):
+    def __init__(self, health=140, attack_power=10, critical_chance=0.08, critical_multiplier=2):
         self.health = health
         self.attack_power = attack_power
         self.critical_chance = critical_chance
