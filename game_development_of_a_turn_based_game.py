@@ -55,4 +55,39 @@ class Enemy:
         
     def is_alive(self):
         return self.health > 0    
-            
+    
+    # enemy attack
+    def attack(self, player):
+        if random.random() < self.critical_chance:
+            damage = self.attack_power * self.critical_multiplier
+            print(f"Enemy deals critical hit! Dealt {damage} damage.")
+        else:
+            damage = self.attack_power
+            print(f"Enemy deals normal hit! Dealt {damage} damage.")
+
+        player.health -= damage
+        print(f"Your health is now {player.health}.")
+
+# main loop
+def main():
+    player = Player()
+    enemy = Enemy()
+
+    while player.is_alive() and enemy.is_alive():
+        action = player.action_choice()
+
+        if action == 1:
+            player.attack(enemy)
+        elif action == 2:
+            player.heal()
+
+        if enemy.is_alive():
+            enemy.attack(player)
+
+    if player.is_alive():
+        print("Congratulations! You defeated the enemy.")
+    else:
+        print("Game over! You were defeated by the enemy.")
+
+if __name__ == "__main__":
+    main()             
